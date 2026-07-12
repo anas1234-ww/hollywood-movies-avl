@@ -10,6 +10,7 @@
 int main(){
 				Movie films("/storage/emulated/0/HollywoodMovies/HollywoodMovies.csv");
 				int choice;
+				std::cin.exceptions(std::ios::failbit);
 				do {
 								std::cout << "==== Hollywood Movie Management System ==== " << std::endl;
    std::cout << "=1. Search for a movie by ID" << std::endl;
@@ -19,7 +20,19 @@ int main(){
    std::cout << "5. View movies from a specific year" << std::endl;
    std::cout << "6. General statistics (average budget, highest-grossing movie, etc.)" << std::endl;
 								std::cout << "7.exit" << std::endl;
-								std::cin >> choice;
+								while (true){
+												try {
+																std::cout << "enter choice : " << std::endl;
+																std::cin >> choice;
+																break;
+												}
+												catch(const std::ios_base::failure& e){
+																std::cout << "Enter a correct choice" << std::endl;
+																std::cin.clear();
+																std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+																
+												}
+								}
 																switch (choice){
 												case 1:{
 																system("clear");
@@ -52,7 +65,7 @@ films.General_statistics_employment();
       break;
 												}	
      default:
-																				std::cout << "Enter one of the good things" << std::endl;
+																				std::cout << "Enter one of the choic" << std::endl;
 																				break;
 								}
 				}while(choice != 7);

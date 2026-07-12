@@ -6,7 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <chrono>
-
+#include <istream>
 //function private
 
 TreeNode<str_film>* Movie::Download_data(std::string& file_name){
@@ -187,22 +187,54 @@ str_film::str_film(){
 				}
 void Movie::Search_film_employment(){
 				int id;
-				std::cout << "enter id : " << std::endl;
-				std::cin >> id;
+				std::cin.exceptions(std::ios::failbit);
+				while(true){
+								try{
+								std::cout << "enter id : " << std::endl;
+								std::cin >> id;
+								break;				
+				}
+								catch(const std::ios_base::failure& e){
+												std::cout << "Enter a correct choice" << std::endl;
+												std::cin.clear();
+												std::cin.ignore(std::numeric_limits<std::streamsize>::max() , '\n');
+								}
+								
+				}
 				TreeNode<str_film>* ser = Search_film(id);
-				std::cout << "------------------------------------" << std::endl;
-				std::cout << "The id : " << ser->value.id << std::endl;
-				std::cout << "The title : " << ser->value.title << std::endl;
-				std::cout << "------------------------------------" << std::endl;
+				if (ser == nullptr){
+								std::cout << "------------------------------------" << std::endl;
+								std::cout << "The film is not found" << std::endl;
+								std::cout << "------------------------------------" << std::endl;
+				} 
+				else {
+								std::cout << "------------------------------------" << std::endl;
+				  std::cout << "The id : " << ser->value.id << std::endl;
+				  std::cout << "The title : " << ser->value.title << std::endl;
+				  std::cout << "------------------------------------" << std::endl;
+				}
 }
 void Movie::show_best_movie_employment(){
 				TreeNode<str_film>* best_movie = show_best_movie(root);
-				std::cout << "The best movie is : " << best_movie->value.title << std::endl;
+				if (best_movie == nullptr)
+				std::cout << "films not found" << std::endl;
+				else std::cout << "The best movie is : " << best_movie->value.title << std::endl;
 }
 void Movie::Comparison_Avl_liner_employment(){
 				int id;
-				std::cout << "enter id : " << std::endl;
-				std::cin >> id;
+				std::cin.exceptions(std::ios::failbit);
+				while(true){
+								try{
+												std::cout << "enter id : " << std::endl;
+												std::cin >> id;
+												break;
+								}
+								catch (std::ios_base::failure& e){
+												std::cout << "The film is not found" << std::endl;
+												std::cin.clear();
+												std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+								}
+				}
 				Comparison_Avl_liner(root , id);
 }
 void Movie::General_statistics_employment(){
